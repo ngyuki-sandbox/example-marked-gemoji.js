@@ -12,7 +12,7 @@ browserify lib/*.js -o dist/gemoji.js --standalone gemoji
 
 ## Demo
 
-- https://rawgit.com/ngyuki/example-gemoji.js/master/example/index.html
+- https://rawgit.com/ngyuki/example-marked-gemoji.js/master/example/index.html
 
 ## Screenshot
 
