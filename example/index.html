@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+    body {
+        margin: 0;
+        padding: 10px;
+    }
+    textarea {
+        width: 100%;
+        height: 400px;
+    }
+    </style>
+</head>
+<body>
+
+<textarea id="input"></textarea>
+<div id="preview"></div>
+
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.js"></script>
+<script src="../dist/gemoji.js"></script>
+
+<script>
+var image = 'https://cdn.rawgit.com/github/gemoji/b84bf23a5b45cca3e15e025cab9953b31796b162/images/emoji/unicode/'
+var fmt = '<img width="20" height="20" align="absmiddle" class="emoji" src="'+image+'%.png">';
+
+var renderer = new marked.Renderer();
+
+renderer.text = function(text) {
+    text = text.replace(/:([+\w]+):/g, function(m, c){
+        var res = gemoji.findByAlias(c);
+        if (res) {
+            var code = res.toString(16);
+            return fmt.replace(/%/g, code);
+        }
+        return m;
+    });
+    return text;
+};
+
+marked.setOptions({renderer: renderer});
+
+$(function(){
+    function render()
+    {
+        var text = $('#input').val();
+        var html = marked(text);
+        $('#preview').html(html);
+    }
+
+    $('#input').on('keyup', function(){
+        render();
+    });
+
+    render();
+})
+</script>
+</body>
+</html>

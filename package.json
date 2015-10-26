@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "string.prototype.codepointat": "~0.2.0"
+  }
+}
