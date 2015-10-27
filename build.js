@@ -2,7 +2,6 @@ var fs = require('fs');
 require('string.prototype.codepointat');
 var list = require('./src/emoji.json');
 
-var names = {};
 var aliases = {};
 
 list.forEach(function(item){
@@ -15,18 +14,13 @@ list.forEach(function(item){
         return;
     }
 
-    var name = item.aliases[0];
+    var codepoint = item.emoji.codePointAt(0);;
 
-    if (item.aliases.length > 1) {
-        item.aliases.splice(1).forEach(function(alias){
-            aliases[alias] = name;
-        })
-    }
-
-    names[name] = item.emoji.codePointAt(0);
+    item.aliases.forEach(function(alias){
+        aliases[alias] = codepoint;
+    })
 })
 
 fs.writeFileSync('./lib/gemoji.json', JSON.stringify({
-    names: names,
     aliases: aliases,
 }));
